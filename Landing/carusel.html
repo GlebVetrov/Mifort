@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css">
+  <style>
+  body {
+  margin-top: 50px;
+  margin-left: 20px;
+}
+/* .carousel-indicators {
+    top:0;
+    width: 30px;
+    height: 200px;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+} */
+
+.item {
+  transition: none !important;
+  left: 0 !important;
+  transform: none !important;   
+}
+.animated {
+  animation-duration: .6s;
+}
+
+ ol.carousel-indicators {
+  position: absolute;
+  width: 20px;
+  height: 200px;
+  top: 0;
+  bottom: none;
+  margin: 0;
+  left: -20px;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* ol.carousel-indicators li,
+ol.carousel-indicators li.active {
+  float: left;
+  width: 33%;
+  height: 10px;
+  margin: 0;
+  border-radius: 0;
+  border: 0;
+  background: transparent;
+} */
+
+ol.carousel-indicators li.active {
+  background: yellow;
+  transform: scale(1.5);
+} 
+  </style>
+</head>
+<body>
+    <div>
+        <div>
+          <div>
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+              <!-- Indicators -->
+              <ol style="background-color: black" class="carousel-indicators">
+                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+              </ol>
+      
+              <!-- Wrapper for slides -->
+              <div class="carousel-inner" role="listbox">
+                <div class="item active">
+                  <img src="https://upload.wikimedia.org/wikipedia/en/thumb/f/fa/No._23_Post_(Skelmorlie)_Image_3.jpg/640px-No._23_Post_(Skelmorlie)_Image_3.jpg" alt="...">
+                  <div class="main__about__text">
+                        <h3>Lorem Ipsum is simply dummy</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                            when an unknown printer took a galley of type and scrambled it to make a type 
+                            specimen book. It has survived not only five centuries, but also the leap into 
+                            electronic typesetting, remaining essentially unchanged
+                        </p>
+                        <ul>
+                            <li>Lorem Ipsum is simply</li>
+                            <li>Lorem Ipsum is simply</li>
+                            <li>Lorem Ipsum is simply</li>
+                        </ul>
+                    </div> 
+                </div>
+                <div class="item">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Image-Lomnicky_stit_from_Slavkovsky_stit_2.jpg/640px-Image-Lomnicky_stit_from_Slavkovsky_stit_2.jpg" alt="..."><div class="main__about__text">
+                        <h3>Lorem Ipsum is simply dummy</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                            when an unknown printer took a galley of type and scrambled it to make a type 
+                            specimen book. It has survived not only five centuries, but also the leap into 
+                            electronic typesetting, remaining essentially unchanged
+                        </p>
+                        <ul>
+                            <li>Lorem Ipsum is simply</li>
+                            <li>Lorem Ipsum is simply</li>
+                            <li>Lorem Ipsum is simply</li>
+                        </ul>
+                    </div> 
+                </div>
+                <div class="item">
+                  <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Image-Peacock_Springs_Entrance.jpg" alt="...">
+                  <div class="main__about__text">
+                        <h3>Lorem Ipsum is simply dummy</h3>
+                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                            when an unknown printer took a galley of type and scrambled it to make a type 
+                            specimen book. It has survived not only five centuries, but also the leap into 
+                            electronic typesetting, remaining essentially unchanged
+                        </p>
+                        <ul>
+                            <li>Lorem Ipsum is simply</li>
+                            <li>Lorem Ipsum is simply</li>
+                            <li>Lorem Ipsum is simply</li>
+                        </ul>
+                    </div> 
+                </div> 
+            </div>
+          </div>
+        </div>
+      </div>
+
+<script>
+$(document).ready(function(){
+  // Activate Carousel
+  
+  $('#carousel-example-generic').on('slide.bs.carousel', function() {
+    if ($('.carousel-inner .item:last').hasClass('active')) {
+      $('.carousel-inner .item:first').addClass('animated slideInUp');
+    } else {
+      $('.item.active').next().addClass('animated slideInUp');
+    }
+    $('.item.active').addClass('animated slideOutUp');
+  });
+  
+  $('#carousel-example-generic').on('slid.bs.carousel', function() {
+    $('.item').removeClass('animated slideInUp slideOutUp')
+  });
+  
+  $('.left').click(function() {
+    if ($('.carousel-inner .item:first').hasClass('active')) {
+      $('.carousel-inner .item:last').addClass('animated slideInUp');
+    } else {
+      $('.item.active').prev().addClass('animated slideInUp');
+    }
+  });
+  
+  $('.carousel-indicators > li').click(function() {
+    $('.item').addClass('animated slideInUp');
+  });
+});
+</script>
+
+</body>
+</html>

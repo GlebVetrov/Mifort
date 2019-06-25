@@ -1,0 +1,345 @@
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-image: url(landing-task.png);
+    box-sizing: border-box;
+}
+
+.header {
+    max-width: 100vw;
+    height: 100vh;
+    border: 3px solid red;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 50px;
+    color: black;
+    margin: 0;
+}
+
+.header--top {
+    flex-grow: 7;
+    opacity: 0.5;
+    background-color: green;
+    flex-direction: column;
+}
+
+.header__section--top {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+.header__logo {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.header__registration {
+    display: flex;
+    flex-direction: row;
+    padding: 5px 10px;
+}
+
+.header__section--bot {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 10px;
+}
+
+.header--mid {
+    flex-grow: 3;
+    opacity: 0.5;
+    background-color: blue;
+    text-align: center
+}
+
+.header--mid h1 {
+    font-size: 55px;
+    margin-bottom: 0;
+}
+
+.header--mid p {
+    font-size: 25px;
+}
+
+.header--bot {
+    height: 600px;
+    display: flex;
+    flex-direction: row;
+    opacity: 0.5;
+    background-color: yellowgreen;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.header--bot--left {
+    width: 780px;
+    padding-left: 40px;
+}
+
+.header--bot--right {
+    box-sizing: border-box;
+    width: 420px;
+    background-color: red;
+    text-align: center;
+    vertical-align: center;
+    padding-top: 100px;
+    padding-left: 25px;
+    padding-right: 10px;
+}
+
+.header--bot--right p:first-child {
+    text-align: left;
+}
+
+.header--bot--right p:last-child {
+    font-weight: bold;
+}
+
+.header--bot--right button {
+    margin-top: 20px;
+    font-size: 18px;
+    padding: 15px 40px;
+}
+
+.header_img1 {
+    width: 500px;
+    height: 500px;
+    background-color: brown;
+}
+
+.header_img2 {
+    width: 600px;
+    height: 450px;
+    background-color: green;
+    position: absolute;
+    top: 100px;
+    left: 145px;
+}
+
+.header__container {
+    width: 1200px;
+}
+
+.main__benefits {
+    width: 1200px;
+    height: 640px;
+    box-sizing: border-box;
+    border: 3px solid rebeccapurple;
+    margin: 0 auto;
+    padding-top: 165px;
+    text-align: center;
+}
+
+.main__benefits h2 {
+    margin-bottom: 0;
+}
+
+.main__benefits p {
+    margin-top: 0;
+}
+
+.figure-image {
+    width: 170px;
+    height: 120px;
+    background-color: black;
+}
+
+.main__benefits__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 50px;
+}
+
+.item-inner {
+    flex-grow: 1;
+    text-align: left;
+    box-sizing: border-box;
+    padding: 20px;
+    margin-top: 20px;
+    margin-right: 50px;
+}
+
+.main__about {
+    width: 1200px;
+    height: 540px;
+    box-sizing: border-box;
+    border: 3px solid green;
+    margin: 0 auto;
+    padding-top: 60px;
+    padding-left: 80px;
+}
+
+#carousel-example-generic {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 30px;
+}
+
+.carousel-inner .item {
+    transition: none !important;
+    left: 0 !important;
+    transform: none !important;
+}
+
+.animated {
+    animation-duration: .6s;
+}
+
+.carousel-inner {
+    margin-right: 50px;
+}
+
+.main__carousel-control {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 270px;
+    margin-right: 50px;
+}
+
+.item img {
+    width: 460px;
+}
+
+.main__about__item {
+    display: flex;
+    flex-direction: row;
+}
+
+.main__about__img {
+    margin-right: 50px;
+}
+
+.main__about ol.carousel-indicators {
+    position: absolute;
+    width: 20px;
+    height: 260px;
+    top: 65px;
+    bottom: none;
+    margin: 0;
+    left: -20px;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+ol.carousel-indicators li {
+    border: 1px solid grey;
+    background: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+ol.carousel-indicators li.active {
+
+    transform: scale(1.5);
+}
+
+.main__features {
+    width: 1200px;
+    height: 730px;
+    box-sizing: border-box;
+    border: 3px solid orange;
+    margin: 0 auto;
+    opacity: 0.8;
+    padding-top: 100px;
+    padding-left: 60px;
+}
+
+.main__features__container {
+    width: 1100px;
+    height: 530px;
+    border: 3px solid orange;
+    display: flex;
+}
+
+.main__features__container--left {
+    height: 530px;
+    width: 345px;
+}
+
+.main__features__container--top {
+    height: 250px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    padding: 50px;
+    align-items: center;
+}
+
+.main__features__container--top h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.main__features__container--top button {
+    padding: 20px 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    background-color: white;
+    border: none;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.main__features__container--bot {
+    height: 250px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.main__features__container--right {
+    border: 1px solid orange;
+    width: 720px;
+    height: 525px;
+    margin-left: 30px;
+}
+
+.main__review {
+    width: 1200px;
+    height: 650px;
+    box-sizing: border-box;
+    border: 3px solid palegreen;
+    margin: 0 auto;
+    padding-top: 90px; 
+    text-align: center;
+}
+
+.main__review .container{
+    margin: 0 auto;
+}
+
+.main__review ol.carousel-indicators {
+    position: absolute;
+    width: 330px;
+    height: 20px;
+    bottom: -50px;
+    margin: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.main__review .item div {
+    margin: 0 auto;
+}
+
+.main__review .glyphicon-chevron-right {
+    position: absolute;
+    left: 150px;
+}
+
+.main__review .glyphicon-chevron-left {
+    position: absolute;
+    left: -20px !important;
+}
