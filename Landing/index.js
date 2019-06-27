@@ -1,28 +1,28 @@
 $(document).ready(function(){
-    // Activate Carousel
     
-    $('#carousel-example-generic').on('.main__about slide.bs.carousel', function() {
-      if ($('.main__about .carousel-inner .item:last').hasClass('active')) {
-        $('.main__about .carousel-inner .item:first').addClass('animated slideInUp');
-      } else {
-        $('.main__about .item.active').next().addClass('animated slideInUp');
-      }
-      $('.main__about .item.active').addClass('animated slideOutUp');
+    $("#navToggle").click(function() {
+      $(this).toggleClass("active");
+      $(".overlay").toggleClass("open");
+      // this line ▼ prevents content scroll-behind
+      $("body").toggleClass("locked"); 
     });
-    
-    $('#carousel-example-generic').on('slid.bs.carousel', function() {
-      $('.item').removeClass('animated slideInUp slideOutUp')
-    });
-    
-    $('.left').click(function() {
-      if ($('.main__about .carousel-inner .item:first').hasClass('active')) {
-        $('.main__about .carousel-inner .item:last').addClass('animated slideInUp');
+
+    $(window).scroll(function(){
+      if ($(this).scrollTop() > 100) {
+          $('.header--top').addClass('fixed');
+          $('.navBurger').addClass('disableNav');
+          $('.header__nav').removeClass('disableNav');
       } else {
-        $('.main__about .item.active').prev().addClass('animated slideInUp');
+          $('.header--top').removeClass('fixed');
+          $('.navBurger').removeClass('disableNav');
+          $('.header__nav').addClass('disableNav');
       }
     });
-    
-    $('.main__about .carousel-indicators > li').click(function() {
-      $('.main__about .item').addClass('animated slideInUp');
+
+    $(".scrolldown").click(function(event){
+      $('html').animate({scrollTop: '1000px'}, "slow");
     });
   });
+
+
+
