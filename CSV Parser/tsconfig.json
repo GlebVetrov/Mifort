@@ -11,6 +11,6 @@
     "noImplicitAny": true
   },
   "include": [
-    "*.ts"
+    "*.ts", "../../freeCodeCamp/test/parser.ts"
   ]  
 }
