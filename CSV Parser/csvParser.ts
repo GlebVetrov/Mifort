@@ -37,7 +37,7 @@ interface IValidators extends IValidData, IData, IGetData, IIsValidate {
   validType():void;
   validValue():void;
   validValueLength():void;    
-  errorMassage(str:string):string;
+  errorMessage(str:string):string;
   makeAllValidation():void
 }
 
@@ -81,7 +81,7 @@ class Validators implements IValidators {
                   break;
               }
               if (this.options.length === i) {
-                  this.array[i]['name'] = this.errorMassage(`not name: ${this.options[i]['name']}`);                    
+                  this.array[i]['name'] = this.errorMessage(`not name: ${this.options[i]['name']}`);                    
                   break;
               }
           }
@@ -97,7 +97,7 @@ class Validators implements IValidators {
                   break;
               }
               if (this.options.length === i) {
-                  this.array[i]['type'] = this.errorMassage(`wrong type: not ${typeof data}`);                    
+                  this.array[i]['type'] = this.errorMessage(`wrong type: not ${typeof data}`);                    
                   break;
               }
               
@@ -114,7 +114,7 @@ class Validators implements IValidators {
                   break;
               }
               if (this.options.length === i) {
-                  this.array[i]['value'] = this.errorMassage(`not value`);
+                  this.array[i]['value'] = this.errorMessage(`not value`);
                   break;
               }
           }
@@ -127,11 +127,11 @@ class Validators implements IValidators {
           for (let data in this.objData) {
               if (this.options[i]['name'] === data) {
                   this.array[i]['valueLength'] = this.isValidateLength(this.objData[data], this.options[i]['validators']) ? 
-                  'length valid' : this.errorMassage('length not valid');
+                  'length valid' : this.errorMessage('length not valid');
                   break;
               }
               if (this.options.length === i) {
-                  this.array[i]['valueLength'] = this.errorMassage(`not value length`);
+                  this.array[i]['valueLength'] = this.errorMessage(`not value length`);
                   break;
               }
           }
@@ -143,22 +143,22 @@ class Validators implements IValidators {
       switch (data) {
           case 'ID':
               let id = this.isValidateId(objData[data]);
-              return id ? objData[data] : this.errorMassage(`wrong value: ${objData[data]}`);
+              return id ? objData[data] : this.errorMessage(`wrong value: ${objData[data]}`);
           case 'Name':
               let name = this.isValidateName(objData[data]);
-              return name ? objData[data] : this.errorMassage(`wrong value: ${objData[data]}`);
+              return name ? objData[data] : this.errorMessage(`wrong value: ${objData[data]}`);
           case 'Surname':
               let surname = this.isValidateName(objData[data]);
-              return surname ? objData[data] : this.errorMassage(`wrong value: ${objData[data]}`);
+              return surname ? objData[data] : this.errorMessage(`wrong value: ${objData[data]}`);
           case 'Mail':
               let mail = this.isValidateEmail(objData[data]);
-              return mail ? objData[data] : this.errorMassage(`wrong value: ${objData[data]}`);
+              return mail ? objData[data] : this.errorMessage(`wrong value: ${objData[data]}`);
           case 'Date of Registration':
               let date = this.isValidateDate(objData[data]);
-              return date ? objData[data] : this.errorMassage(`wrong value: ${objData[data]}`);
+              return date ? objData[data] : this.errorMessage(`wrong value: ${objData[data]}`);
           case 'Phone':
               let phone = this.isValidatePhone(objData[data]);
-              return phone ? objData[data] : this.errorMassage(`wrong value: ${objData[data]}`);
+              return phone ? objData[data] : this.errorMessage(`wrong value: ${objData[data]}`);
           default:
               return;
       }
@@ -195,7 +195,7 @@ class Validators implements IValidators {
       return regName.test(name);
   }
 
-  errorMassage(str:string):string {
+  errorMessage(str:string):string {
       this.dataError = true;
       console.log(`[Error (${str})]`);
       return str;
