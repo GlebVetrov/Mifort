@@ -1,32 +1,45 @@
-var configCsv = [{
+var configCsv = [
+    {
         name: "ID",
-        type: "string",
-        validators: [1, 4]
+        validators: {
+            length: [1, 4],
+            type: "ID"
+        }
     },
     {
         name: "Name",
-        type: "string",
-        validators: [1, 18]
+        validators: {
+            length: [1, 18],
+            type: "Name"
+        }
     },
     {
         name: "Surname",
-        type: "string",
-        validators: [1, 18]
+        validators: {
+            length: [1, 18],
+            type: "Surname"
+        }
     },
     {
         name: "Mail",
-        type: "string",
-        validators: [6, 18]
+        validators: {
+            length: [6, 18],
+            type: "Mail"
+        }
     },
     {
         name: "Date of Registration",
-        type: "string",
-        validators: [10]
+        validators: {
+            length: [8, 10],
+            type: "Date of Registration",
+        }
     },
     {
         name: "Phone",
-        type: "string",
-        validators: [14, 16]
+        validators: {
+            length: [14, 16],
+            type: "Phone"
+        }
     },
 ];
 module.exports = configCsv;
