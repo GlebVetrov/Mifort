@@ -1,1 +1,281 @@
-[{"dataError":false,"array":[{"name":"ID","type":"string","value":"1001","valueLength":"length valid"},{"name":"Name","type":"string","value":"Dima","valueLength":"length valid"},{"name":"Surname","type":"string","value":"Dmitriev","valueLength":"length valid"},{"name":"Mail","type":"string","value":"Dima@mail.ru","valueLength":"length valid"},{"name":"Date of Registration","type":"string","value":"02,05,2016","valueLength":"length valid"},{"name":"Phone","type":"string","value":"375 29 3526547","valueLength":"length valid"}]},{"dataError":false,"array":[{"name":"ID","type":"string","value":"1003","valueLength":"length valid"},{"name":"Name","type":"string","value":"Anna","valueLength":"length valid"},{"name":"Surname","type":"string","value":"Antonova","valueLength":"length valid"},{"name":"Mail","type":"string","value":"Anna@gmail.ru","valueLength":"length valid"},{"name":"Date of Registration","type":"string","value":"03/13/2014","valueLength":"length valid"},{"name":"Phone","type":"string","value":"375 44 8541254","valueLength":"length valid"}]},{"dataError":false,"array":[{"name":"ID","type":"string","value":"1004","valueLength":"length valid"},{"name":"Name","type":"string","value":"Max","valueLength":"length valid"},{"name":"Surname","type":"string","value":"Vasiliev","valueLength":"length valid"},{"name":"Mail","type":"string","value":"Max@mail.ru","valueLength":"length valid"},{"name":"Date of Registration","type":"string","value":"05.07.2008","valueLength":"length valid"},{"name":"Phone","type":"string","value":"375 29 14521445","valueLength":"length valid"}]},{"dataError":false,"array":[{"name":"ID","type":"string","value":"1005","valueLength":"length valid"},{"name":"Name","type":"string","value":"Inna","valueLength":"length valid"},{"name":"Surname","type":"string","value":"Bushilo","valueLength":"length valid"},{"name":"Mail","type":"string","value":"Inna@mail.ru","valueLength":"length valid"},{"name":"Date of Registration","type":"string","value":"04.02.2017","valueLength":"length valid"},{"name":"Phone","type":"string","value":"375 25 6578410","valueLength":"length valid"}]},{"dataError":false,"array":[{"name":"ID","type":"string","value":"1006","valueLength":"length valid"},{"name":"Name","type":"string","value":"Oleg","valueLength":"length valid"},{"name":"Surname","type":"string","value":"Kats","valueLength":"length valid"},{"name":"Mail","type":"string","value":"Ole@mail.ru","valueLength":"length valid"},{"name":"Date of Registration","type":"string","value":"29,01,2016","valueLength":"length valid"},{"name":"Phone","type":"string","value":"375 28 2540033","valueLength":"length valid"}]},{"dataError":false,"array":[{"name":"ID","type":"string","value":"1008","valueLength":"length valid"},{"name":"Name","type":"string","value":"Elena","valueLength":"length valid"},{"name":"Surname","type":"string","value":"Glazov","valueLength":"length valid"},{"name":"Mail","type":"string","value":"Elena@mail.ru","valueLength":"length valid"},{"name":"Date of Registration","type":"string","value":"24,04,2014","valueLength":"length valid"},{"name":"Phone","type":"string","value":"375 30 2561421","valueLength":"length valid"}]}]
+[
+    [
+        {
+            "name": "ID",
+            "value": "1001",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }, {
+            "name": "Name",
+            "value": "Dima",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }, {
+            "name": "Surname",
+            "value": "Dmitriev",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }, {
+            "name": "Mail",
+            "value": "Dima@mail.ru",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }
+    ],
+    [
+        {
+            "name": "ID",
+            "value": "1002",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }, {
+            "name": "Name",
+            "value": "Vasya",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }, {
+            "name": "Surname",
+            "value": "Petrov",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }, {
+            "name": "Mail",
+            "value": "Vasya@mail.ru",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }
+    ],
+    [
+        {
+            "name": "ID",
+            "value": "1003",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }, {
+            "name": "Name",
+            "value": "Anna",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }, {
+            "name": "Surname",
+            "value": "Antonova",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }, {
+            "name": "Mail",
+            "value": "Anna@gmail.ru",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }
+    ],
+    [
+        {
+            "name": "ID",
+            "value": "1004",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }, {
+            "name": "Name",
+            "value": "Max",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }, {
+            "name": "Surname",
+            "value": "Vasiliev",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }, {
+            "name": "Mail",
+            "value": "Max@mail.ru",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }
+    ],
+    [
+        {
+            "name": "ID",
+            "value": "1005",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }, {
+            "name": "Name",
+            "value": "Inna",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }, {
+            "name": "Surname",
+            "value": "Bushilo",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }, {
+            "name": "Mail",
+            "value": "Inna@mail.ru",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }
+    ],
+    [
+        {
+            "name": "ID",
+            "value": "1006",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }, {
+            "name": "Name",
+            "value": "Oleg",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }, {
+            "name": "Surname",
+            "value": "Kats",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }, {
+            "name": "Mail",
+            "value": "Oleg@mail.ru",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }
+    ],
+    [
+        {
+            "name": "ID",
+            "value": "1007",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }, {
+            "name": "Name",
+            "value": "Petya",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }, {
+            "name": "Surname",
+            "value": "Grom",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }, {
+            "name": "Mail",
+            "value": "Petya@gmail.ru",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }
+    ],
+    [
+        {
+            "name": "ID",
+            "value": "1008",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }, {
+            "name": "Name",
+            "value": "Elena",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }, {
+            "name": "Surname",
+            "value": "Glazov",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }, {
+            "name": "Mail",
+            "value": "Elena@mail.ru",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }
+    ],
+    [
+        {
+            "name": "ID",
+            "value": "1008",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }, {
+            "name": "Name",
+            "value": "Igor",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }, {
+            "name": "Surname",
+            "value": "Igorov",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }, {
+            "name": "Mail",
+            "value": "Igor@mail.ru",
+            "validators": {
+                "length": "valid",
+                "type": "valid"
+            }
+        }
+    ]
+]

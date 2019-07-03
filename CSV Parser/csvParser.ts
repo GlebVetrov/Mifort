@@ -1,236 +1,247 @@
 import csv = require('csv-parser');
 import fs = require('fs');
-let configCsv = require('./config.js');
+let configCsv : ColumnDescriptor[] = require('./config.js');
 
-let positiveResult:Array<IData>=[];
-let negativeResult:Array<IData>=[];
+let positiveResult : Array < object >= [];
+let negativeResult : Array < object >= [];
 
-interface IValidData {
-  array:any[];
-  dataError:boolean;
-  objData: any;
-  options: IConf[];
+interface ColumnDescriptor {
+    name : string,
+    validators : Validators
+
 }
 
-interface IData {
-  dataError:boolean,
-  array:any[]
-}   
+interface Validators {
+    length : number[],
+    type : string
+}
 
-interface IGetData {
-  getValue(data: string, objData: object):string;
-  getData():IData;
+interface IValidData {
+    dataError : boolean;
+    objData : {
+        name?: string,
+        value?: string
+    };
+    options : Validators;
+    validTypes : any;
 }
 
 interface IIsValidate {
-  isValidateEmail(email:string):boolean;
-  isValidatePhone(number:string):boolean;
-  isValidateLength(str:string, array:number[]):boolean;
-  isValidateDate(date:string):boolean;
-  isValidateId(id:string):boolean;
-  isValidateName(name:string):boolean;
+    isValidateEmail(email : string) : boolean;
+    isValidatePhone(number : string) : boolean;
+    isValidateLength() : boolean;
+    isValidateDate(date : string) : boolean;
+    isValidateId(id : string) : boolean;
+    isValidateName(name : string) : boolean;
 }
 
-interface IValidators extends IValidData, IData, IGetData, IIsValidate {    
-  createObjList():void;
-  matchName():void;
-  validType():void;
-  validValue():void;
-  validValueLength():void;    
-  errorMessage(str:string):string;
-  makeAllValidation():void
+interface IValidators extends IValidData,
+IIsValidate {
+    validationType(): void;
+    errorMessage(str : string): string;
+    getData(): object;
 }
 
-interface IConf {
-  name: string,
-  type: string,
-  validators: number[]
+interface IValidTypes {
+    ID : (id : string) => boolean;
+    Name : (name : string) => boolean;
+    Surname : (name : string) => boolean;
+    Mail : (email : string) => boolean;
+    'Date of Registration' : (date : string) => boolean;
+    Phone : (number : string) => boolean;
 }
-interface IObjData {
-  ID: string,
-  Name: string,
-  Surname: string,
-  Mail: string,
-  'Date of Registration': string,
-  Phone: string
+
+interface IUser {
+    ID : string,
+    Name : string,
+    Surname : string,
+    Mail : string,
+    'Date of Registration' : string,
+    [Phone : string] : string
 }
 
 class Validators implements IValidators {
-  array:any[] = [];
-  dataError:boolean = false;
-  objData:any;
-  options:IConf[];
 
-  constructor(_objData:any, _options:IConf[]) {
-      this.objData = _objData;
-      this.options = _options;
-      
-  }
+    isValidateLength = () : boolean => {
+        let {length} = this;
+        let {value} = this.objData;
+        if (value.length < length[0] || value.length > length[1]) {
+            return false;
+        }
+        return true;
+    }
 
-  createObjList():void {
-      for (let i = 0; i < this.options.length; i++) {
-          this.array[i] = {};
-      }
-  }
+    validationType = () : boolean => {
+        let {validTypes} = this;
+        let {name, value} = this.objData;
+        for (let key in validTypes) {
+            if (key === name) {
+                return validTypes[key](value);
+            }
+        }
+        return true;
+    }
 
-  matchName():void {
-      for (let i = 0; i < this.options.length; i++) {
-          for (let data in this.objData) {
-              if (this.options[i]['name'] === data) {
-                  this.array[i]['name'] = data;
-                  break;
-              }
-              if (this.options.length === i) {
-                  this.array[i]['name'] = this.errorMessage(`not name: ${this.options[i]['name']}`);                    
-                  break;
-              }
-          }
-      }
-      return;
-  }
+    dataError : boolean = false;
+    objData : {
+        name?: string,
+        value?: string
+    };
+    validObj : any = {
+        validators: {
 
-  validType():void {
-      for (let i = 0; i < this.options.length; i++) {
-          for (let data in this.objData) {
-              if (this.options[i]['type'] === typeof data && this.options[i]['name'] === data) {
-                  this.array[i]['type'] = typeof data;
-                  break;
-              }
-              if (this.options.length === i) {
-                  this.array[i]['type'] = this.errorMessage(`wrong type: not ${typeof data}`);                    
-                  break;
-              }
-              
-          }
-      }
-      return;
-  }
+        }
+    };
+    options : Validators;
+    validators : any = {
+        length: this.isValidateLength,
+        type: this.validationType
+    }
+    validTypes : any = {
+        ID: this.isValidateId,
+        Name: this.isValidateName,
+        Surname: this.isValidateName,
+        Mail: this.isValidateEmail,
+        'Date of Registration': this.isValidateDate,
+        Phone: this.isValidatePhone
+    }
 
-  validValue():void {
-      for (let i = 0; i < this.options.length; i++) {
-          for (let data in this.objData) {
-              if (this.options[i]['name'] === data) {
-                  this.array[i]['value'] = this.getValue(data, this.objData);
-                  break;
-              }
-              if (this.options.length === i) {
-                  this.array[i]['value'] = this.errorMessage(`not value`);
-                  break;
-              }
-          }
-      }
-      return;
-  }
+    constructor(_objData : {
+        name?: string,
+        value?: string
+    }, _options : Validators) {
+        this.length = _options.length;
+        this.objData = _objData;
+        this.options = _options;
+    }
 
-  validValueLength():void {
-      for (let i = 0; i < this.options.length; i++) {
-          for (let data in this.objData) {
-              if (this.options[i]['name'] === data) {
-                  this.array[i]['valueLength'] = this.isValidateLength(this.objData[data], this.options[i]['validators']) ? 
-                  'length valid' : this.errorMessage('length not valid');
-                  break;
-              }
-              if (this.options.length === i) {
-                  this.array[i]['valueLength'] = this.errorMessage(`not value length`);
-                  break;
-              }
-          }
-      }
-      return;
-  }
+    validation() : void {
+        let {options, validators, validObj} = this;
+        for (let key in options) {
+            for (let val in validators) {
+                if (key === val) {
+                    if (validators[val]()) {
+                        validObj['validators'][val] = 'valid';
+                        break;
+                    }
+                    validObj['validators'][val] = this.errorMessage(`${val} not valid`);
+                    break;
+                }
+            }
+        }
+    }
 
-  getValue(data: string, objData: any):string {
-      switch (data) {
-          case 'ID':
-              let id = this.isValidateId(objData[data]);
-              return id ? objData[data] : this.errorMessage(`wrong value: ${objData[data]}`);
-          case 'Name':
-              let name = this.isValidateName(objData[data]);
-              return name ? objData[data] : this.errorMessage(`wrong value: ${objData[data]}`);
-          case 'Surname':
-              let surname = this.isValidateName(objData[data]);
-              return surname ? objData[data] : this.errorMessage(`wrong value: ${objData[data]}`);
-          case 'Mail':
-              let mail = this.isValidateEmail(objData[data]);
-              return mail ? objData[data] : this.errorMessage(`wrong value: ${objData[data]}`);
-          case 'Date of Registration':
-              let date = this.isValidateDate(objData[data]);
-              return date ? objData[data] : this.errorMessage(`wrong value: ${objData[data]}`);
-          case 'Phone':
-              let phone = this.isValidatePhone(objData[data]);
-              return phone ? objData[data] : this.errorMessage(`wrong value: ${objData[data]}`);
-          default:
-              return;
-      }
-  }
+    isValidateEmail(email : string) : boolean {
+        let regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return regEmail.test(String(email).toLowerCase());
+    }
 
-  isValidateEmail(email:string):boolean {
-      let regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return regEmail.test(String(email).toLowerCase());
-  }
+    isValidatePhone(number : string) : boolean {
+        let regNumber = /\d{3}\s?\d\d\s?\d{7}/;
+        return regNumber.test(number);
+    }
 
-  isValidatePhone(number:string):boolean {
-      let regNumber = /\d\d\d\s?\d\d\s?\d\d\d\d\d/;
-      return regNumber.test(number);
-  }
+    isValidateDate(date : string) : boolean {
+        let regDate = /\d\d\S\d\d\S\d{4}/;
+        return regDate.test(date);
+    }
 
-  isValidateLength(str:string, array:number[]):boolean {
-      if (str.length < array[0] || str.length > array[1]) {
-          return false;
-      }
-      return true;
-  }
+    isValidateId(id : string) : boolean {
+        return !isNaN(Number(id));
+    }
 
-  isValidateDate(date:string):boolean {
-      let regDate = /\d\d\S\d\d\S\d\d\d\d/;
-      return regDate.test(date);
-  }
+    isValidateName(name : string) : boolean {
+        let regName = /^[a-zA-Z'][a-zA-Z-' ]+[a-zA-Z']?$/u;
+        return regName.test(name);
+    }
 
-  isValidateId(id:string):boolean {
-      return !isNaN(Number(id));
-  }
+    errorMessage(str : string) : string {
+        this.dataError = true;
+        console.log(`[Error (${str})]`);
+        return str;
+    }
 
-  isValidateName(name:string):boolean {
-      let regName = /^[a-zA-Z'][a-zA-Z-' ]+[a-zA-Z']?$/u;
-      return regName.test(name);
-  }
+    getError() : boolean {
+        return this.dataError;
+    }
 
-  errorMessage(str:string):string {
-      this.dataError = true;
-      console.log(`[Error (${str})]`);
-      return str;
-  }
+    getData() : object {
+        let {validObj, objData} = this;
+        validObj = {
+            ...objData,
+            ...validObj
+        }
+        return validObj;
+    }
 
-  getData():IData {
-      const dataError = this.dataError;
-      const array = this.array;
-
-      const data:IData = {
-          dataError,
-          array
-      }
-
-      return data;
-  }
-
-  makeAllValidation():void {
-    this.createObjList();
-    this.matchName();
-    this.validType();
-    this.validValue();
-    this.validValueLength();
-  }
 }
 
-fs.createReadStream('Users.csv')
-  .pipe(csv({separator: ';'}))
-  .on('data', (data: any) => {
-    let test:Validators = new Validators(data, configCsv);
-    test.makeAllValidation();
-    let obj = test.getData();
-    obj.dataError ? negativeResult.push(obj) : positiveResult.push(obj);    
-  })
-  .on('end', () => {
+fs
+    .createReadStream('Users.csv')
+    .pipe(csv({separator: ';'}))
+    .on('data', (data : IUser) => {
+        let validArray : Array < object > = createObjList(configCsv);
+        validArray = matchConfigName(configCsv, validArray, data);
+        validatWithConfig(validArray, configCsv);
+    })
+    .on('end', () => {
         fs.writeFileSync("valid.json", JSON.stringify(positiveResult));
         fs.writeFileSync("not-valid.json", JSON.stringify(negativeResult));
-  });
+    });
+
+function createObjList(options : ColumnDescriptor[]) : object[] {
+    let array : Array < {
+        name?: string,
+        value?: string
+    } > = [];
+    for (let i = 0; i < options.length; i++) {
+        array[i] = {};
+    }
+    return array;
+}
+
+function matchConfigName(options : Array < ColumnDescriptor >, array : Array < {
+    name?: string,
+    value?: string
+} >, data : IUser) : Array < object > {
+    for(let i = 0; i < options.length; i++) {
+        for (let key in data) {
+            if (options[i]['name'] === key) {
+                array[i]['name'] = key;
+                array[i]['value'] = data[key];
+                break;
+            }
+            if (options.length - 1 === i) {
+                array[i]['name'] = errorMessage(`not data: ${options[i]['name']}`);
+                break;
+            }
+        }
+    }
+    return array;
+}
+
+function errorMessage(str : string) : string {return str;}
+
+function validatWithConfig(array : Array < {
+    name?: string,
+    value?: string
+} >, options : Array < ColumnDescriptor >) {
+    let vadlidWithConfig: Array<object> = [];
+    let validError = false; 
+    for (let i = 0; i < options.length; i++) {
+            if (options[i]['name'] === array[i]['name']) {
+                let item = new Validators(array[i], options[i]['validators']);
+                item.validation();
+                vadlidWithConfig.push(item.getData());
+                if ( !validError ){
+                    validError = item.getError();
+                }
+            }            
+        }       
+    if (validError) {
+        negativeResult.push(vadlidWithConfig);
+        return;
+    }
+    positiveResult.push(vadlidWithConfig);
+    return;
+}
