@@ -182,7 +182,6 @@ function matchConfigName(options : Array < ColumnDescriptor >, array : Array < I
             if (options[i]['name'] === key) {
                 array[i]['name'] = key;
                 array[i]['value'] = data[key];
-                value = key;
                 break;
             }
         }

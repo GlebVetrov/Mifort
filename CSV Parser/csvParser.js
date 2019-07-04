@@ -109,13 +109,11 @@ function createObjList(options) {
     return array;
 }
 function matchConfigName(options, array, data) {
-    var value = null;
     for (var i = 0; i < options.length; i++) {
         for (var key in data) {
             if (options[i]['name'] === key) {
                 array[i]['name'] = key;
                 array[i]['value'] = data[key];
-                value = key;
                 break;
             }
         }
