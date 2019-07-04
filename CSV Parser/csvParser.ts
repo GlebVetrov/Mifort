@@ -177,7 +177,6 @@ function createObjList(options : ColumnDescriptor[]) : Array < IArrayData > {
 }
 
 function matchConfigName(options : Array < ColumnDescriptor >, array : Array < IArrayData >, data : IUser) : Array < IArrayData > { 
-    let value = null;
     for(let i = 0; i < options.length; i++) {
         for (let key in data) {            
             if (options[i]['name'] === key) {
