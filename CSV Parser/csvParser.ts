@@ -108,7 +108,7 @@ class Validators implements IValidators {
       };
 
     createMessage (message: string, settings: object):string {
-        for (var key in settings) {            
+        for (let key in settings) {            
             console.log( `Error ${ key } ${ settings[key] }` )
         }
         return message;
