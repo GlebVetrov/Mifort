@@ -34,7 +34,7 @@ interface IValidData {
     mesages: object;    
     isValid : boolean;    
     options : Validators;
-    regExps:any ;
+    regExps:IRegExps ;
 }
 
 
@@ -49,27 +49,27 @@ interface IValidators extends IValidData {
 
 
 interface IUser {
-    ID : string,
-    Name : string,
-    Surname : string,
-    Mail : string,
-    'Date of Registration' : string,
-    [Phone : string] : string
+    ID : string;
+    Name : string;
+    Surname : string;
+    Mail : string;
+    'Date of Registration' : string;
+    [Phone : string] : string;
 }
 
 interface IRegExps {
-    ID : RegExp,
-    Name : RegExp,
-    Surname : RegExp,
-    Mail : RegExp,
-    'Date of Registration' : RegExp,
-    Phone : RegExp
+    ID : RegExp;
+    Name : RegExp;
+    Surname : RegExp;
+    Mail : RegExp;
+    'Date of Registration' : RegExp;
+    Phone : RegExp;
 }
 
 class Validators implements IValidators {    
 
     options : Validators;
-    validators : any = {
+    validators : object = {
     }
     isValid : boolean = true;
     item : IArrayData;
@@ -103,14 +103,12 @@ class Validators implements IValidators {
     max(param: number) : boolean {
         return this.length <= param;
       };
-    match(param: string) : boolean {
-        // @ts-ignore
+    match(param: string) : boolean {        
         return this.regExps[param].test(this.value);
       };
 
     createMessage (message: string, settings: object):string {
-        for (var key in settings) {
-            // @ts-ignore
+        for (var key in settings) {            
             console.log( `Error ${ key } ${ settings[key] }` )
         }
         return message;
@@ -120,25 +118,17 @@ class Validators implements IValidators {
         this.value = this.item.value.trim();
         this.length = this.value.length;        
         for (let rule in this.rules) {
-            // @ts-ignore
-            // console.log(typeof this.rules[rule])
-            // @ts-ignore
             let param = this.rules[rule];
-            // @ts-ignore
             let result = this[rule](param);
             if (result) {
                 this.validators[rule] = 'valid';
             }
             if (!result) {
                 this.isValid = false;
-                // @ts-ignore
-                this.validators[rule] = this.mesages[rule];
-                // @ts-ignore
-                let message = this.createMessage(message, {
-                  data: this.value,
-                  // @ts-ignore
+                this.validators[rule] = this.createMessage(this.mesages[rule], {
+                  data: this.value,                  
                   rule: this.mesages[rule]
-                })
+                });
               }
           }
           return {...this.item, ...this.validators};
@@ -205,10 +195,14 @@ function validatWithConfig(array : Array < IArrayData >, options : Array < Colum
             validError = false;   
             vadlidWithConfig.push(array[i]);
         }       
-    if (validError) {
-        positiveResult.push(vadlidWithConfig);
+    sortData(validError, vadlidWithConfig);
+}
+
+function sortData(isError:boolean, array: Array<object>): void {
+    if (isError) {
+        positiveResult.push(array);
         return;
     }
-    negativeResult.push(vadlidWithConfig);
+    negativeResult.push(array);
     return;
 }

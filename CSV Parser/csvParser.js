@@ -44,13 +44,11 @@ var Validators = /** @class */ (function () {
     };
     ;
     Validators.prototype.match = function (param) {
-        // @ts-ignore
         return this.regExps[param].test(this.value);
     };
     ;
     Validators.prototype.createMessage = function (message, settings) {
         for (var key in settings) {
-            // @ts-ignore
             console.log("Error " + key + " " + settings[key]);
         }
         return message;
@@ -60,23 +58,15 @@ var Validators = /** @class */ (function () {
         this.value = this.item.value.trim();
         this.length = this.value.length;
         for (var rule in this.rules) {
-            // @ts-ignore
-            // console.log(typeof this.rules[rule])
-            // @ts-ignore
             var param = this.rules[rule];
-            // @ts-ignore
             var result = this[rule](param);
             if (result) {
                 this.validators[rule] = 'valid';
             }
             if (!result) {
                 this.isValid = false;
-                // @ts-ignore
-                this.validators[rule] = this.mesages[rule];
-                // @ts-ignore
-                var message = this.createMessage(message, {
+                this.validators[rule] = this.createMessage(this.mesages[rule], {
                     data: this.value,
-                    // @ts-ignore
                     rule: this.mesages[rule]
                 });
             }
@@ -137,11 +127,14 @@ function validatWithConfig(array, options) {
         validError = false;
         vadlidWithConfig.push(array[i]);
     }
-    if (validError) {
-        positiveResult.push(vadlidWithConfig);
+    sortData(validError, vadlidWithConfig);
+}
+function sortData(isError, array) {
+    if (isError) {
+        positiveResult.push(array);
         return;
     }
-    negativeResult.push(vadlidWithConfig);
+    negativeResult.push(array);
     return;
 }
 //# sourceMappingURL=csvParser.js.map
