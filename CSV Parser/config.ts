@@ -1,55 +1,114 @@
 interface ColumnDescriptor {
     name: string,
-    validators: Validators
-    
+    validators: Validators    
 }
 
 interface Validators {
-    length: number[],
-    type: string
+    rules: IRules,
+    messages: IMessages
+}
+
+interface IRules {
+    min: number,
+    max: number,
+    match: string
+}
+
+interface IMessages {
+    min: string,
+    max: string,
+    match: string
 }
 
 let configCsv: ColumnDescriptor[] = [
     {
         name: "ID",
         validators: {
-            length: [1, 4],
-            type: "ID"
+            rules: {
+                min: 1,
+                max: 4,
+                match: 'ID'
+              },
+            messages: {
+                min: 'Поле должно содержать больше 1 символов',
+                max: 'Поле не должно содержать больше 4 символов',
+                match: 'Поле должно содержать валидный id'
+              }  
         }
     },
     {
         name: "Name",
         validators: {
-            length: [1, 18],
-            type: "Name"
+            rules: {
+                min: 1,
+                max: 18,
+                match: 'Name'
+              },
+            messages: {
+                min: 'Поле должно содержать больше 1 символов',
+                max: 'Поле не должно содержать больше 18 символов',
+                match: 'Поле должно содержать валидный Имя'
+              }
         }
     },
     {
         name: "Surname",
         validators: {
-            length:[1, 18],
-            type: "Surname"
+            rules: {
+                min: 1,
+                max: 18,
+                match: 'Surname'
+              },
+            messages: {
+                min: 'Поле должно содержать больше 1 символов',
+                max: 'Поле не должно содержать больше 18 символов',
+                match: 'Поле должно содержать валидный Фамилию'
+              }
         }
     },
     {
         name: "Mail",       
         validators: {
-            length: [6, 18],
-            type: "Mail"
+            rules: {
+                min: 6,
+                max: 18,
+                match: 'Mail'
+              },
+            messages: {
+                min: 'Поле должно содержать больше 6 символов',
+                max: 'Поле не должно содержать больше 18 символов',
+                match: 'Поле должно содержать валидный Mail'
+              }
         }
     },
     {
         name: "Date of Registration",
         validators: {
-            length: [8, 10],
-            type: "Date of Registration",
+            rules: {
+                min: 8,
+                max: 10,
+                match: 'Date of Registration'
+              },
+            messages: {
+                min: 'Поле должно содержать больше 8 символов',
+                max: 'Поле не должно содержать больше 10 символов',
+                match: 'Поле должно содержать валидный Дату'
+              }
         }
     },
     {
         name: "Phone",
         validators: {
-            length: [14, 16],
-            type: "Phone"
+            rules: {
+                min: 14,
+                max: 16,
+                match: 'Phone'
+              },
+            messages: {
+                min: 'Поле должно содержать больше 14 символов',
+                max: 'Поле не должно содержать больше 16 символов',
+                match: 'Поле должно содержать валидный Телефон'
+              }
         }
     },
 ]
