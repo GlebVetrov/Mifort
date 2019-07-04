@@ -17,92 +17,75 @@ var configCsv = require('./config.js');
 var positiveResult = [];
 var negativeResult = [];
 var Validators = /** @class */ (function () {
-    function Validators(_objData, _options) {
-        var _this = this;
-        this.isValidateLength = function () {
-            var length = _this.length;
-            var value = _this.objData.value;
-            if (value.length < length[0] || value.length > length[1]) {
-                return false;
-            }
-            return true;
+    function Validators(item, options) {
+        this.validators = {};
+        this.isValid = true;
+        this.regExps = {
+            ID: /^\d+$/,
+            Name: /^[a-zA-Z'][a-zA-Z-' ]+[a-zA-Z']?$/u,
+            Surname: /^[a-zA-Z'][a-zA-Z-' ]+[a-zA-Z']?$/u,
+            Mail: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+            'Date of Registration': /\d\d\S\d\d\S\d{4}/,
+            Phone: /\d{3}\s?\d\d\s?\d{7}/,
         };
-        this.validationType = function () {
-            var validTypes = _this.validTypes;
-            var _a = _this.objData, name = _a.name, value = _a.value;
-            for (var key in validTypes) {
-                if (key === name) {
-                    return validTypes[key](value);
-                }
-            }
-            return true;
-        };
-        this.dataError = false;
-        this.validObj = {
-            validators: {}
-        };
-        this.validators = {
-            length: this.isValidateLength,
-            type: this.validationType
-        };
-        this.validTypes = {
-            ID: this.isValidateId,
-            Name: this.isValidateName,
-            Surname: this.isValidateName,
-            Mail: this.isValidateEmail,
-            'Date of Registration': this.isValidateDate,
-            Phone: this.isValidatePhone
-        };
-        this.length = _options.length;
-        this.objData = _objData;
-        this.options = _options;
+        this.item = item;
+        this.options = options;
+        this.value = this.item.value.trim();
+        this.length = this.value.length;
+        this.rules = this.options.rules;
+        this.mesages = this.options.messages;
     }
-    Validators.prototype.validation = function () {
-        var _a = this, options = _a.options, validators = _a.validators, validObj = _a.validObj;
-        for (var key in options) {
-            for (var val in validators) {
-                if (key === val) {
-                    if (validators[val]()) {
-                        validObj['validators'][val] = 'valid';
-                        break;
-                    }
-                    validObj['validators'][val] = this.errorMessage(val + " not valid");
-                    break;
-                }
+    Validators.prototype.min = function (param) {
+        return this.length >= param;
+    };
+    ;
+    Validators.prototype.max = function (param) {
+        return this.length <= param;
+    };
+    ;
+    Validators.prototype.match = function (param) {
+        // @ts-ignore
+        return this.regExps[param].test(this.value);
+    };
+    ;
+    Validators.prototype.createMessage = function (message, settings) {
+        for (var key in settings) {
+            // @ts-ignore
+            console.log("Error " + key + " " + settings[key]);
+        }
+        return message;
+    };
+    ;
+    Validators.prototype.validate = function () {
+        this.value = this.item.value.trim();
+        this.length = this.value.length;
+        for (var rule in this.rules) {
+            // @ts-ignore
+            // console.log(typeof this.rules[rule])
+            // @ts-ignore
+            var param = this.rules[rule];
+            // @ts-ignore
+            var result = this[rule](param);
+            if (result) {
+                this.validators[rule] = 'valid';
+            }
+            if (!result) {
+                this.isValid = false;
+                // @ts-ignore
+                this.validators[rule] = this.mesages[rule];
+                // @ts-ignore
+                var message = this.createMessage(message, {
+                    data: this.value,
+                    // @ts-ignore
+                    rule: this.mesages[rule]
+                });
             }
         }
+        return __assign({}, this.item, this.validators);
     };
-    Validators.prototype.isValidateEmail = function (email) {
-        var regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return regEmail.test(String(email).toLowerCase());
-    };
-    Validators.prototype.isValidatePhone = function (number) {
-        var regNumber = /\d{3}\s?\d\d\s?\d{7}/;
-        return regNumber.test(number);
-    };
-    Validators.prototype.isValidateDate = function (date) {
-        var regDate = /\d\d\S\d\d\S\d{4}/;
-        return regDate.test(date);
-    };
-    Validators.prototype.isValidateId = function (id) {
-        return !isNaN(Number(id));
-    };
-    Validators.prototype.isValidateName = function (name) {
-        var regName = /^[a-zA-Z'][a-zA-Z-' ]+[a-zA-Z']?$/u;
-        return regName.test(name);
-    };
-    Validators.prototype.errorMessage = function (str) {
-        this.dataError = true;
-        console.log("[Error (" + str + ")]");
-        return str;
-    };
+    ;
     Validators.prototype.getError = function () {
-        return this.dataError;
-    };
-    Validators.prototype.getData = function () {
-        var _a = this, validObj = _a.validObj, objData = _a.objData;
-        validObj = __assign({}, objData, validObj);
-        return validObj;
+        return this.isValid;
     };
     return Validators;
 }());
@@ -121,45 +104,42 @@ fs
 function createObjList(options) {
     var array = [];
     for (var i = 0; i < options.length; i++) {
-        array[i] = {};
+        array[i] = { name: null, value: null };
     }
     return array;
 }
 function matchConfigName(options, array, data) {
+    var value = null;
     for (var i = 0; i < options.length; i++) {
         for (var key in data) {
             if (options[i]['name'] === key) {
                 array[i]['name'] = key;
                 array[i]['value'] = data[key];
-                break;
-            }
-            if (options.length - 1 === i) {
-                array[i]['name'] = errorMessage("not data: " + options[i]['name']);
+                value = key;
                 break;
             }
         }
     }
     return array;
 }
-function errorMessage(str) { return str; }
 function validatWithConfig(array, options) {
     var vadlidWithConfig = [];
-    var validError = false;
+    var validError = true;
     for (var i = 0; i < options.length; i++) {
         if (options[i]['name'] === array[i]['name']) {
             var item = new Validators(array[i], options[i]['validators']);
-            item.validation();
-            vadlidWithConfig.push(item.getData());
-            if (!validError) {
+            var obj = item.validate();
+            vadlidWithConfig.push(obj);
+            if (validError) {
                 validError = item.getError();
             }
         }
     }
     if (validError) {
-        negativeResult.push(vadlidWithConfig);
+        positiveResult.push(vadlidWithConfig);
         return;
     }
-    positiveResult.push(vadlidWithConfig);
+    negativeResult.push(vadlidWithConfig);
     return;
 }
 //# sourceMappingURL=csvParser.js.map

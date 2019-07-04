@@ -1,1 +1,1 @@
-[]
+[[{"name":"ID","value":"10m01","min":"valid","max":"Поле не должно содержать больше 4 символов","match":"Поле должно содержать валидный id"},{"name":"Name","value":"Dima","min":"valid","max":"valid","match":"valid"},{"name":"Surname","value":"Dmitriev","min":"valid","max":"valid","match":"valid"},{"name":"Mail","value":"Dima@mail.ru","min":"valid","max":"valid","match":"valid"},{"name":"Date of Registration","value":"02,05,2016","min":"valid","max":"valid","match":"valid"}]]
