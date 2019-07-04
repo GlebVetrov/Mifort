@@ -160,8 +160,7 @@ fs
     .pipe(csv({separator: ';'}))
     .on('data', (data : IUser) => {
         let validArray : Array < IArrayData > = createObjList(configCsv);
-        validArray = matchConfigName(configCsv, validArray, data);        
-        validatWithConfig(validArray, configCsv);
+        validArray = matchConfigName(configCsv, validArray, data); validatWithConfig(validArray, configCsv);
     })
     .on('end', () => {
         fs.writeFileSync("valid.json", JSON.stringify(positiveResult));
@@ -176,16 +175,17 @@ function createObjList(options : ColumnDescriptor[]) : Array < IArrayData > {
     return array;
 }
 
-function matchConfigName(options : Array < ColumnDescriptor >, array : Array < IArrayData >, data : IUser) : Array < IArrayData > { 
+function matchConfigName(options : Array < ColumnDescriptor >, array : Array < IArrayData >, data : IUser) : Array < IArrayData > {     
+    let keys = Object.keys(data);    
     for(let i = 0; i < options.length; i++) {
-        for (let key in data) {            
-            if (options[i]['name'] === key) {
-                array[i]['name'] = key;
-                array[i]['value'] = data[key];
-                break;
+            if (options[i]['name'] === keys[i]) {
+                array[i]['name'] = keys[i];
+                array[i]['value'] = data[keys[i]];
+                continue;
             }
-        }
-    }
+            array[i]['name'] = `not value ${options[i]['name']}`;
+            console.log(`not value ${options[i]['name']}`);
+       }
     return array;
 }
 
@@ -200,7 +200,10 @@ function validatWithConfig(array : Array < IArrayData >, options : Array < Colum
                 if (validError) {
                     validError = item.getError();
                 }
-            }            
+                continue;
+            } 
+            validError = false;   
+            vadlidWithConfig.push(array[i]);
         }       
     if (validError) {
         positiveResult.push(vadlidWithConfig);

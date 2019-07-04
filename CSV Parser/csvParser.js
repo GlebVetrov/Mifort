@@ -109,14 +109,15 @@ function createObjList(options) {
     return array;
 }
 function matchConfigName(options, array, data) {
+    var keys = Object.keys(data);
     for (var i = 0; i < options.length; i++) {
-        for (var key in data) {
-            if (options[i]['name'] === key) {
-                array[i]['name'] = key;
-                array[i]['value'] = data[key];
-                break;
-            }
+        if (options[i]['name'] === keys[i]) {
+            array[i]['name'] = keys[i];
+            array[i]['value'] = data[keys[i]];
+            continue;
         }
+        array[i]['name'] = "not value " + options[i]['name'];
+        console.log("not value " + options[i]['name']);
     }
     return array;
 }
@@ -131,7 +132,10 @@ function validatWithConfig(array, options) {
             if (validError) {
                 validError = item.getError();
             }
+            continue;
         }
+        validError = false;
+        vadlidWithConfig.push(array[i]);
     }
     if (validError) {
         positiveResult.push(vadlidWithConfig);
