@@ -3,12 +3,12 @@ var configCsv = [
         name: "ID",
         validators: {
             rules: {
-                min: 1,
+                // min: 1, 
                 max: 4,
-                match: 'ID'
+                match: /^\d+$/
             },
             messages: {
-                min: 'Поле должно содержать больше 1 символов',
+                // min: 'Поле должно содержать больше 1 символов',
                 max: 'Поле не должно содержать больше 4 символов',
                 match: 'Поле должно содержать валидный id'
             }
@@ -20,7 +20,7 @@ var configCsv = [
             rules: {
                 min: 1,
                 max: 18,
-                match: 'Name'
+                match: /^[a-zA-Z'][a-zA-Z-' ]+[a-zA-Z']?$/u
             },
             messages: {
                 min: 'Поле должно содержать больше 1 символов',
@@ -35,7 +35,7 @@ var configCsv = [
             rules: {
                 min: 1,
                 max: 18,
-                match: 'Surname'
+                match: /^[a-zA-Z'][a-zA-Z-' ]+[a-zA-Z']?$/u
             },
             messages: {
                 min: 'Поле должно содержать больше 1 символов',
@@ -50,7 +50,7 @@ var configCsv = [
             rules: {
                 min: 6,
                 max: 18,
-                match: 'Mail'
+                match: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
             },
             messages: {
                 min: 'Поле должно содержать больше 6 символов',
@@ -65,7 +65,7 @@ var configCsv = [
             rules: {
                 min: 8,
                 max: 10,
-                match: 'Date of Registration'
+                match: /\d\d\S\d\d\S\d{4}/
             },
             messages: {
                 min: 'Поле должно содержать больше 8 символов',
@@ -80,7 +80,7 @@ var configCsv = [
             rules: {
                 min: 14,
                 max: 16,
-                match: 'Phone'
+                match: /\d{3}\s?\d\d\s?\d{7}/
             },
             messages: {
                 min: 'Поле должно содержать больше 14 символов',

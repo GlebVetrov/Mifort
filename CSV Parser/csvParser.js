@@ -20,14 +20,6 @@ var Validators = /** @class */ (function () {
     function Validators(item, options) {
         this.validators = {};
         this.isValid = true;
-        this.regExps = {
-            ID: /^\d+$/,
-            Name: /^[a-zA-Z'][a-zA-Z-' ]+[a-zA-Z']?$/u,
-            Surname: /^[a-zA-Z'][a-zA-Z-' ]+[a-zA-Z']?$/u,
-            Mail: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-            'Date of Registration': /\d\d\S\d\d\S\d{4}/,
-            Phone: /\d{3}\s?\d\d\s?\d{7}/,
-        };
         this.item = item;
         this.options = options;
         this.value = this.item.value.trim();
@@ -44,7 +36,7 @@ var Validators = /** @class */ (function () {
     };
     ;
     Validators.prototype.match = function (param) {
-        return this.regExps[param].test(this.value);
+        return param.test(this.value);
     };
     ;
     Validators.prototype.createMessage = function (message, settings) {
@@ -55,8 +47,6 @@ var Validators = /** @class */ (function () {
     };
     ;
     Validators.prototype.validate = function () {
-        this.value = this.item.value.trim();
-        this.length = this.value.length;
         for (var rule in this.rules) {
             var param = this.rules[rule];
             var result = this[rule](param);

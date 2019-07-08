@@ -18,7 +18,7 @@ interface Validators {
 interface IRules {
     min: number,
     max: number,
-    match: string
+    match: RegExp
 }
 
 interface IMessages {
@@ -34,14 +34,13 @@ interface IValidData {
     mesages: object;    
     isValid : boolean;    
     options : Validators;
-    regExps:IRegExps ;
 }
 
 
 interface IValidators extends IValidData {
     min(param: number) : boolean;
     max(param: number) : boolean;
-    match(param: string) : boolean;
+    match(param: RegExp) : boolean;
     createMessage (message: string, settings: object):string;
     validate(): object;
     getError() : boolean;
@@ -57,14 +56,6 @@ interface IUser {
     [Phone : string] : string;
 }
 
-interface IRegExps {
-    ID : RegExp;
-    Name : RegExp;
-    Surname : RegExp;
-    Mail : RegExp;
-    'Date of Registration' : RegExp;
-    Phone : RegExp;
-}
 
 class Validators implements IValidators {    
 
@@ -76,16 +67,7 @@ class Validators implements IValidators {
     value: string;
     length: number;
     mesages: object;
-    regExps:IRegExps= {
-        ID: /^\d+$/,
-        Name: /^[a-zA-Z'][a-zA-Z-' ]+[a-zA-Z']?$/u,
-        Surname: /^[a-zA-Z'][a-zA-Z-' ]+[a-zA-Z']?$/u,
-        Mail: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,        
-        'Date of Registration': /\d\d\S\d\d\S\d{4}/,
-        Phone: /\d{3}\s?\d\d\s?\d{7}/,
-
-    }
-
+    
     constructor(item : IArrayData, options : Validators) {
         this.item = item;
         this.options = options;
@@ -103,8 +85,8 @@ class Validators implements IValidators {
     max(param: number) : boolean {
         return this.length <= param;
       };
-    match(param: string) : boolean {        
-        return this.regExps[param].test(this.value);
+    match(param: RegExp) : boolean {        
+        return param.test(this.value);
       };
 
     createMessage (message: string, settings: object):string {
@@ -115,8 +97,6 @@ class Validators implements IValidators {
       };
 
       validate(): object {
-        this.value = this.item.value.trim();
-        this.length = this.value.length;        
         for (let rule in this.rules) {
             let param = this.rules[rule];
             let result = this[rule](param);
