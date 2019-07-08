@@ -16,15 +16,15 @@ interface Validators {
 }
 
 interface IRules {
-    min: number,
-    max: number,
-    match: RegExp
+    min?: number,
+    max?: number,
+    match?: RegExp
 }
 
 interface IMessages {
-    min: string,
-    max: string,
-    match: string
+    min?: string,
+    max?: string,
+    match?: string
 }
 
 interface IValidData {
