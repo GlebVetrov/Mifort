@@ -25,7 +25,6 @@ var Validators = /** @class */ (function () {
         this.value = this.item.value.trim();
         this.length = this.value.length;
         this.rules = this.options.rules;
-        this.mesages = this.options.messages;
     }
     Validators.prototype.min = function (param) {
         return this.length >= param;
@@ -48,16 +47,16 @@ var Validators = /** @class */ (function () {
     ;
     Validators.prototype.validate = function () {
         for (var rule in this.rules) {
-            var param = this.rules[rule];
+            var param = this.rules[rule]['value'];
             var result = this[rule](param);
             if (result) {
                 this.validators[rule] = 'valid';
             }
             if (!result) {
                 this.isValid = false;
-                this.validators[rule] = this.createMessage(this.mesages[rule], {
+                this.validators[rule] = this.createMessage(this.rules[rule]['textError'], {
                     data: this.value,
-                    rule: this.mesages[rule]
+                    rule: this.rules[rule]['textError']
                 });
             }
         }
@@ -125,4 +124,5 @@ function sortData(isError, array) {
     negativeResult.push(array);
     return;
 }
+module.exports = createObjList;
 //# sourceMappingURL=csvParser.js.map

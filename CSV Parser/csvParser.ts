@@ -16,9 +16,14 @@ interface Validators {
 }
 
 interface IRules {
-    min?: number,
-    max?: number,
-    match?: RegExp
+    min?: IOptions,
+    max?: IOptions,
+    match?: IOptions
+}
+
+interface IOptions {
+    value: number | RegExp,
+    textError: string
 }
 
 interface IMessages {
@@ -75,7 +80,6 @@ class Validators implements IValidators {
         this.value = this.item.value.trim();
         this.length = this.value.length;
         this.rules = this.options.rules;
-        this.mesages = this.options.messages;
     }
 
     min(param: number) : boolean {
@@ -98,16 +102,16 @@ class Validators implements IValidators {
 
       validate(): object {
         for (let rule in this.rules) {
-            let param = this.rules[rule];
+            let param = this.rules[rule]['value'];
             let result = this[rule](param);
             if (result) {
                 this.validators[rule] = 'valid';
             }
             if (!result) {
                 this.isValid = false;
-                this.validators[rule] = this.createMessage(this.mesages[rule], {
+                this.validators[rule] = this.createMessage(this.rules[rule]['textError'], {
                   data: this.value,                  
-                  rule: this.mesages[rule]
+                  rule: this.rules[rule]['textError']
                 });
               }
           }
@@ -184,3 +188,5 @@ function sortData(isError:boolean, array: Array<object>): void {
     negativeResult.push(array);
     return;
 }
+
+module.exports = createObjList;
