@@ -137,12 +137,10 @@ fs
         fs.writeFileSync("not-valid.json", JSON.stringify(negativeResult));
     });
 
-function createObjList(options : ColumnDescriptor[]) : Array < IArrayData > {
-    let array : Array < IArrayData > = [];
-    for (let i = 0; i < options.length; i++) {
-        array[i] = { name: null, value: null};
-    }
-    return array;
+function createObjList(options : ColumnDescriptor[]) : Array < IArrayData > {    
+    return options.map(() => {
+        return { name: null, value: null};
+    });    
 }
 
 function matchConfigName(options : Array < ColumnDescriptor >, array : Array < IArrayData >, data : IUser) : Array < IArrayData > {     

@@ -82,11 +82,9 @@ fs
     fs.writeFileSync("not-valid.json", JSON.stringify(negativeResult));
 });
 function createObjList(options) {
-    var array = [];
-    for (var i = 0; i < options.length; i++) {
-        array[i] = { name: null, value: null };
-    }
-    return array;
+    return options.map(function () {
+        return { name: null, value: null };
+    });
 }
 function matchConfigName(options, array, data) {
     var keys = Object.keys(data);
