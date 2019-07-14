@@ -1,9 +1,12 @@
 const mocha = require('mocha');
 const chai = require('chai');
+const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
 
 const {createObjList, matchConfigName, validatWithConfig, sortData, Validators} = require('../csvParser.js');
 
 const assert = chai.assert;
+chai.use(sinonChai);
 
 describe('should create array', () => {
     let testOptions = [
@@ -46,6 +49,7 @@ describe('should create array', () => {
         assert.deepEqual(createObjList(testOptions), expectedArray);
     });
 });
+
 describe('compere config name with name from csv file', () => {
 
     it('match name', () => {

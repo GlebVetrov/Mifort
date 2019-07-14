@@ -76,7 +76,7 @@ class Validators implements IValidators {
     constructor(item : IArrayData, options : Validators) {
         this.item = item;
         this.options = options; 
-        
+
         this.value = this.item.value.trim();
         this.length = this.value.length;
         this.rules = this.options.rules;
@@ -129,18 +129,18 @@ interface IArrayData {
     value: string
 }
 
-fs
-    .createReadStream('Users.csv')
-    .pipe(csv({separator: ';'}))
-    .on('data', (data : IUser) => {
-        let validArray : Array < IArrayData > = createObjList(configCsv);
-        validArray = matchConfigName(configCsv, validArray, data);        
-        validatWithConfig(validArray, configCsv);
-    })
-    .on('end', () => {
-        fs.writeFileSync("valid.json", JSON.stringify(positiveResult));
-        fs.writeFileSync("not-valid.json", JSON.stringify(negativeResult));
-    });
+// fs
+//     .createReadStream('Users.csv')
+//     .pipe(csv({separator: ';'}))
+//     .on('data', (data : IUser) => {
+//         let validArray : Array < IArrayData > = createObjList(configCsv);
+//         validArray = matchConfigName(configCsv, validArray, data);        
+//         validatWithConfig(validArray, configCsv);
+//     })
+//     .on('end', () => {
+//         fs.writeFileSync("valid.json", JSON.stringify(positiveResult));
+//         fs.writeFileSync("not-valid.json", JSON.stringify(negativeResult));
+//     });
 
 function createObjList(options : ColumnDescriptor[]) : Array < IArrayData > {    
     return options.map(() => {

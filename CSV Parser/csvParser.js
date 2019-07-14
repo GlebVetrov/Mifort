@@ -11,8 +11,6 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var csv = require("csv-parser");
-var fs = require("fs");
 var configCsv = require('./config.js');
 var positiveResult = [];
 var negativeResult = [];
@@ -68,18 +66,18 @@ var Validators = /** @class */ (function () {
     };
     return Validators;
 }());
-fs
-    .createReadStream('Users.csv')
-    .pipe(csv({ separator: ';' }))
-    .on('data', function (data) {
-    var validArray = createObjList(configCsv);
-    validArray = matchConfigName(configCsv, validArray, data);
-    validatWithConfig(validArray, configCsv);
-})
-    .on('end', function () {
-    fs.writeFileSync("valid.json", JSON.stringify(positiveResult));
-    fs.writeFileSync("not-valid.json", JSON.stringify(negativeResult));
-});
+// fs
+//     .createReadStream('Users.csv')
+//     .pipe(csv({separator: ';'}))
+//     .on('data', (data : IUser) => {
+//         let validArray : Array < IArrayData > = createObjList(configCsv);
+//         validArray = matchConfigName(configCsv, validArray, data);        
+//         validatWithConfig(validArray, configCsv);
+//     })
+//     .on('end', () => {
+//         fs.writeFileSync("valid.json", JSON.stringify(positiveResult));
+//         fs.writeFileSync("not-valid.json", JSON.stringify(negativeResult));
+//     });
 function createObjList(options) {
     return options.map(function () {
         return { name: null, value: null };
