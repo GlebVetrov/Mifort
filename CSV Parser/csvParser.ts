@@ -75,8 +75,8 @@ class Validators implements IValidators {
     
     constructor(item : IArrayData, options : Validators) {
         this.item = item;
-        this.options = options;
-
+        this.options = options; 
+        
         this.value = this.item.value.trim();
         this.length = this.value.length;
         this.rules = this.options.rules;
@@ -134,7 +134,8 @@ fs
     .pipe(csv({separator: ';'}))
     .on('data', (data : IUser) => {
         let validArray : Array < IArrayData > = createObjList(configCsv);
-        validArray = matchConfigName(configCsv, validArray, data); validatWithConfig(validArray, configCsv);
+        validArray = matchConfigName(configCsv, validArray, data);        
+        validatWithConfig(validArray, configCsv);
     })
     .on('end', () => {
         fs.writeFileSync("valid.json", JSON.stringify(positiveResult));
@@ -147,21 +148,22 @@ function createObjList(options : ColumnDescriptor[]) : Array < IArrayData > {
     });    
 }
 
-function matchConfigName(options : Array < ColumnDescriptor >, array : Array < IArrayData >, data : IUser) : Array < IArrayData > {     
-    let keys = Object.keys(data);    
-    for(let i = 0; i < options.length; i++) {
-            if (options[i]['name'] === keys[i]) {
-                array[i]['name'] = keys[i];
-                array[i]['value'] = data[keys[i]];
-                continue;
-            }
-            array[i]['name'] = `not value ${options[i]['name']}`;
-            console.log(`not value ${options[i]['name']}`);
-       }
+function matchConfigName(options : Array < ColumnDescriptor >, array : Array < IArrayData >, data : IUser) : Array < IArrayData > {
+    out: for (var i = 0; i < options.length; i++) {        
+        for (let key in data){
+            if (options[i]['name'] === key) {
+                array[i]['name'] = key;
+                array[i]['value'] = data[key];
+                continue out;
+            }           
+        }
+        array[i]['name'] = "not value " + options[i]['name'];
+        console.log("not value " + options[i]['name']); 
+    }
     return array;
 }
 
-function validatWithConfig(array : Array < IArrayData >, options : Array < ColumnDescriptor >) {
+function validatWithConfig(array : Array < IArrayData >, options : Array < ColumnDescriptor >):void {    
     let vadlidWithConfig: Array<object> = [];
     let validError = true; 
     for (let i = 0; i < options.length; i++) {
@@ -189,4 +191,10 @@ function sortData(isError:boolean, array: Array<object>): void {
     return;
 }
 
-module.exports = createObjList;
+module.exports = {
+    createObjList,
+    matchConfigName,
+    validatWithConfig,
+    sortData,
+    Validators
+};

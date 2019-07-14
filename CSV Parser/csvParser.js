@@ -86,12 +86,13 @@ function createObjList(options) {
     });
 }
 function matchConfigName(options, array, data) {
-    var keys = Object.keys(data);
-    for (var i = 0; i < options.length; i++) {
-        if (options[i]['name'] === keys[i]) {
-            array[i]['name'] = keys[i];
-            array[i]['value'] = data[keys[i]];
-            continue;
+    out: for (var i = 0; i < options.length; i++) {
+        for (var key in data) {
+            if (options[i]['name'] === key) {
+                array[i]['name'] = key;
+                array[i]['value'] = data[key];
+                continue out;
+            }
         }
         array[i]['name'] = "not value " + options[i]['name'];
         console.log("not value " + options[i]['name']);
@@ -124,5 +125,11 @@ function sortData(isError, array) {
     negativeResult.push(array);
     return;
 }
-module.exports = createObjList;
+module.exports = {
+    createObjList: createObjList,
+    matchConfigName: matchConfigName,
+    validatWithConfig: validatWithConfig,
+    sortData: sortData,
+    Validators: Validators
+};
 //# sourceMappingURL=csvParser.js.map
