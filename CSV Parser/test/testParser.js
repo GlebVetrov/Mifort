@@ -1,20 +1,250 @@
-const mocha = require('mocha'); 
+const mocha = require('mocha');
 const chai = require('chai');
 
-const pow = require('../tests');
-const createObjList = require('../csvParser.js')
+const {createObjList, matchConfigName, validatWithConfig, sortData, Validators} = require('../csvParser.js');
 
-const assert = chai.assert ;
+const assert = chai.assert;
 
-describe('pow', () => {
-    it('pow*pow', () => {
-        assert.equal(pow(2), 4);
+describe('should create array', () => {
+    let testOptions = [
+        {
+            name: 'ID'
+        }, {
+            name: 'Name'
+        }, {
+            name: 'Surname'
+        }, {
+            name: 'Mail'
+        }, {
+            name: 'Date of Registration'
+        }, {
+            name: 'Phone'
+        }
+    ];
+    let expectedArray = [
+        {
+            name: null,
+            value: null
+        }, {
+            name: null,
+            value: null
+        }, {
+            name: null,
+            value: null
+        }, {
+            name: null,
+            value: null
+        }, {
+            name: null,
+            value: null
+        }, {
+            name: null,
+            value: null
+        }
+    ];
+    it('create array with obj{ name: null, value: null}', () => {
+        assert.deepEqual(createObjList(testOptions), expectedArray);
     });
 });
-describe('should create array', () => {
-    it('create array with obj{ name: null, value: null}', () => {
-        let testArray = [{}, {}, {}, {}, {}, {}];
-        let array = [{ name: null, value: null}, { name: null, value: null}, { name: null, value: null}, { name: null, value: null}, { name: null, value: null}, { name: null, value: null}];
-        assert.deepEqual(createObjList(testArray), array);
+describe('compere config name with name from csv file', () => {
+
+    it('match name', () => {
+
+        let testArray = [
+            {
+                name: null,
+                value: null
+            }, {
+                name: null,
+                value: null
+            }
+        ];
+
+        let options = [
+            {
+                name: 'ID'
+            }, {
+                name: 'Name'
+            }
+        ];
+
+        let data = {
+            ID: '1001',
+            Name: 'Dima'
+        };
+
+        let expectedArray = [
+            {
+                name: 'ID',
+                value: '1001'
+            }, {
+                name: 'Name',
+                value: 'Dima'
+            }
+        ];
+
+        assert.deepEqual(matchConfigName(options, testArray, data), expectedArray);
+    });
+
+    it('not match name', () => {
+
+        let testArray = [
+            {
+                name: null,
+                value: null
+            }, {
+                name: null,
+                value: null
+            }
+        ];
+
+        let options = [
+            {
+                name: 'ID'
+            }, {
+                name: 'Name'
+            }
+        ];
+
+        let dataError = {
+            ID: '1001'
+        };
+
+        let expectedErrorArray = [
+            {
+                name: 'ID',
+                value: '1001'
+            }, {
+                name: 'not value Name',
+                value: null
+            }
+        ];
+
+        assert.deepEqual(matchConfigName(options, testArray, dataError), expectedErrorArray);
+    });
+});
+
+describe('check class Validators', () => {
+    let obj = {
+        name: 'ID',
+        value: '1001'
+    };
+
+    it('method min', () => {
+
+        let objError = {
+            name: 'ID',
+            value: ''
+        };
+        let rules = {
+            min: {
+                value: 1,
+                textError: 'Поле должно содержать больше 1 символов'
+            }
+        }
+        let test = new Validators(obj, rules);
+        let testError = new Validators(objError, rules);
+        assert.isTrue(test.min(rules.min.value));
+        assert.isFalse(testError.min(rules.min.value));
+    });
+
+    it('method max', () => {
+
+        let objError = {
+            name: 'ID',
+            value: '10011001'
+        };
+        let rules = {
+            max: {
+                value: 4,
+                textError: 'Поле не должно содержать больше 4 символов'
+            }
+        }
+        let test = new Validators(obj, rules);
+        let testError = new Validators(objError, rules);
+        assert.isTrue(test.max(rules.max.value));
+        assert.isFalse(testError.max(rules.max.value));
+    });
+
+    it('method match', () => {
+
+        let objError = {
+            name: 'ID',
+            value: '10m011m01'
+        };
+        let rules = {
+            match: {
+                value: /^\d+$/,
+                textError: 'Поле должно содержать валидный id'
+            }
+        }
+        let test = new Validators(obj, rules);
+        let testError = new Validators(objError, rules);
+        assert.isTrue(test.match(rules.match.value));
+        assert.isFalse(testError.match(rules.match.value));
+    });
+
+    it('method createMessage', () => {
+
+        let rules = {
+            min: {
+                value: 1,
+                textError: 'Поле должно содержать больше 1 символов'
+            }
+        }
+
+        let test = new Validators(obj, rules);
+        assert.equal(test.createMessage(rules.min.textError, {
+            data: obj.value,
+            rule: rules.min.textError
+        }), rules.min.textError);
+    });
+
+    it('method validate and getError', () => {
+
+        let result = {
+            name: 'ID',
+            value: '1001',
+            min: 'valid',
+            max: 'valid',
+            match: 'valid'
+        }
+
+        let rules = {
+            rules: {
+                min: {
+                    value: 1,
+                    textError: 'Поле должно содержать больше 1 символов'
+                },
+                max: {
+                    value: 4,
+                    textError: 'Поле не должно содержать больше 4 символов'
+                },
+                match: {
+                    value: /^\d+$/,
+                    textError: 'Поле должно содержать валидный id'
+                }
+            }
+        }
+
+        let objError = {
+            name: 'ID',
+            value: '10m011m01'
+        };
+
+        let resultError = {
+            name: 'ID',
+            value: '10m011m01',
+            min: 'valid',
+            max: 'Поле не должно содержать больше 4 символов',
+            match: 'Поле должно содержать валидный id'
+        }
+
+        let test = new Validators(obj, rules);
+        assert.deepEqual(test.validate(), result);
+        assert.isTrue(test.getError());
+        let testError = new Validators(objError, rules);
+        assert.deepEqual(testError.validate(), resultError);
+        assert.isFalse(testError.getError());
     });
 });
