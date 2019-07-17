@@ -17,6 +17,7 @@
     "chai": "^4.2.0",
     "csv-parser": "^2.3.0",
     "mocha": "^6.1.4",
+    "pubsub-js": "^1.7.0",
     "sinon": "^7.3.2",
     "sinon-chai": "^3.3.0"
   },

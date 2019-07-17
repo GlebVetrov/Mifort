@@ -2,8 +2,11 @@ const mocha = require('mocha');
 const chai = require('chai');
 const sinon = require('sinon');
 const sinonChai = require('sinon-chai');
+const PubSub = require('pubsub-js');
 
 const {createObjList, matchConfigName, validatWithConfig, sortData, Validators} = require('../csvParser.js');
+
+const configCsv = require('../config.js');
 
 const assert = chai.assert;
 chai.use(sinonChai);
@@ -250,5 +253,42 @@ describe('check class Validators', () => {
         let testError = new Validators(objError, rules);
         assert.deepEqual(testError.validate(), resultError);
         assert.isFalse(testError.getError());
+    });
+
+});
+
+describe('test function validatWithConfig', () => {
+    let array = [
+        {
+            name: 'ID',
+            value: '1001'
+        }, {
+            name: 'Name',
+            value: 'Dima'
+        }, {
+            name: 'Surname',
+            value: 'Dmitriev'
+        }, {
+            name: 'Mail',
+            value: 'Dima@mail.ru'
+        }, {
+            name: 'Date of Registration',
+            value: '02,05,2016'
+        }, {
+            name: 'Phone',
+            value: '375 29 3526547'
+        }
+    ];
+
+
+    it('test callback', () => {
+        var object = {
+            method: validatWithConfig
+        };
+        var spy = sinon.spy(object, "method");
+
+        object.method(array, configCsv);
+
+        assert(spy.withArgs(array, configCsv).calledOnce);
     });
 });
