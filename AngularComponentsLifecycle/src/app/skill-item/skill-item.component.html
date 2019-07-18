@@ -1,5 +1,5 @@
 <div>
-    's Skill # value is {{_count}}
-    <button (click)="count=1">+</button>
-    <button (click)="count=-1">-</button>
+    {{name}}'s Skill # value is {{counter}}
+    <button (click)="inc.emit()" (click)="count=1">+</button>
+    <button (click)="dec.emit()" (click)="count=-1">-</button>
 </div>

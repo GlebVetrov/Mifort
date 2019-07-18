@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-skill-item',
@@ -7,15 +7,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SkillItemComponent {
 
-  private _count:number = 0;
+  private counter = 0;
 
-  get count():number {
-    return this._count;
-  };
+  @Input()
+  private name: string;
 
-  set count(count:number) {
-    this._count += count;
-  };
+  @Output()
+  private dec: EventEmitter<void> = new EventEmitter<void>();
 
-  
+  @Output()
+  private inc: EventEmitter<void> = new EventEmitter<void>();
+
+  get count(): number {
+    return this.counter;
+  }
+
+  set count(count: number) {
+    this.counter += count;
+  }
 }
