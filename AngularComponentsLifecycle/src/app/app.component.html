@@ -1,7 +1,7 @@
 <div [class]="'main'">
-  <input type="text" [(ngModel)]="name">
-  <app-skill-item (inc)="count=1" (dec)="count=-1" [name]='name'></app-skill-item>
-  <app-skill-item (inc)="count=1" (dec)="count=-1" [name]='name'></app-skill-item>
-  <app-skill-item (inc)="count=1" (dec)="count=-1" [name]='name'></app-skill-item>
-  <div>Total: {{totalCounter}} </div>
+  <app-name-item><input type="text" [(ngModel)]="name"></app-name-item>
+  
+  <app-skill-item *ngFor="let color of colors; let i = index" [color]="color" (inc)="count=1" (dec)="count=-1" [name]="name"></app-skill-item>
+
+    <div>Total: {{totalCounter}} </div>
 </div>

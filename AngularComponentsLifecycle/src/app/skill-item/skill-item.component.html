@@ -1,5 +1,5 @@
-<div>
+<div [ngStyle]="{color: ''+ color +''}">
     {{name}}'s Skill # value is {{counter}}
-    <button (click)="inc.emit()" (click)="count=1">+</button>
-    <button (click)="dec.emit()" (click)="count=-1">-</button>
+    <button [ngStyle]="{backgroundColor: ''+ color +'', border: 'none', marginRight: '5px'}" (click)="inc.emit()" (click)="count=1">+</button>
+    <button [ngStyle]="{backgroundColor: ''+ color +'', border: 'none'}" (click)="dec.emit()" (click)="count=-1">-</button>
 </div>
