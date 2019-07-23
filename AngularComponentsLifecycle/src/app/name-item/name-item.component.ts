@@ -7,10 +7,13 @@ import { Component,
  AfterViewChecked,
  AfterViewInit } from '@angular/core';
 
+import { ConsoleLogService } from '../console-log.service';
+
 @Component({
   selector: 'app-name-item',
   templateUrl: './name-item.component.html',
-  styleUrls: ['./name-item.component.scss']
+  styleUrls: ['./name-item.component.scss'],
+  providers: [ConsoleLogService]
 })
 export class NameItemComponent implements OnInit,
 DoCheck,
@@ -20,32 +23,30 @@ AfterContentChecked,
 AfterViewChecked,
 AfterViewInit {
 
-  private color = 'green';
+  constructor(private consoleLogService: ConsoleLogService) {}
 
-  private log(msg: string) {
-    console.log ( '%c%s', `color: ${this.color}`, msg );
-  }
+  private color = 'purple';
 
   ngOnInit() {
-    this.log(`ngOnInit`);
+    this.consoleLogService.write(`ngOnInit`, this.color);
   }
   ngOnChanges() {
-    this.log(`OnChanges`);
+    this.consoleLogService.write(`OnChanges`, this.color);
   }
   ngDoCheck() {
-    this.log(`ngDoCheck`);
+    this.consoleLogService.write(`ngDoCheck`, this.color);
   }
   ngAfterViewInit() {
-    this.log(`ngAfterViewInit`);
+    this.consoleLogService.write(`ngAfterViewInit`, this.color);
   }
   ngAfterViewChecked() {
-    this.log(`ngAfterViewChecked`);
+    this.consoleLogService.write(`ngAfterViewChecked`, this.color);
   }
   ngAfterContentInit() {
-    this.log(`ngAfterContentInit`);
+    this.consoleLogService.write(`ngAfterContentInit`, this.color);
   }
   ngAfterContentChecked() {
-    this.log(`ngAfterContentChecked`);
+    this.consoleLogService.write(`ngAfterContentChecked`, this.color);
   }
 
 }

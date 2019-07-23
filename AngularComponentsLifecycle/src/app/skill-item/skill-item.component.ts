@@ -7,10 +7,13 @@ import { Component, Input, Output, EventEmitter,
  AfterViewChecked,
  AfterViewInit } from '@angular/core';
 
+import { ConsoleLogService } from '../console-log.service';
+
 @Component({
   selector: 'app-skill-item',
   templateUrl: './skill-item.component.html',
-  styleUrls: ['./skill-item.component.scss']
+  styleUrls: ['./skill-item.component.scss'],
+  providers: [ConsoleLogService]
 })
 export class SkillItemComponent implements OnInit,
 DoCheck,
@@ -19,6 +22,8 @@ AfterContentInit,
 AfterContentChecked,
 AfterViewChecked,
 AfterViewInit {
+
+  constructor(private consoleLogService: ConsoleLogService) {}
 
   private counter = 0;
 
@@ -42,29 +47,26 @@ AfterViewInit {
     this.counter += count;
   }
 
-  private log(msg: string) {
-    console.log ( '%c%s', `color: ${this.color}`, msg );
-  }
   ngOnInit() {
-    this.log(`ngOnInit`);
+    this.consoleLogService.write(`ngOnInit`, this.color);
   }
   ngOnChanges() {
-    this.log(`OnChanges`);
+    this.consoleLogService.write(`OnChanges`, this.color);
   }
   ngDoCheck() {
-    this.log(`ngDoCheck`);
+    this.consoleLogService.write(`ngDoCheck`, this.color);
   }
   ngAfterViewInit() {
-    this.log(`ngAfterViewInit`);
+    this.consoleLogService.write(`ngAfterViewInit`, this.color);
   }
   ngAfterViewChecked() {
-    this.log(`ngAfterViewChecked`);
+    this.consoleLogService.write(`ngAfterViewChecked`, this.color);
   }
   ngAfterContentInit() {
-    this.log(`ngAfterContentInit`);
+    this.consoleLogService.write(`ngAfterContentInit`, this.color);
   }
   ngAfterContentChecked() {
-    this.log(`ngAfterContentChecked`);
+    this.consoleLogService.write(`ngAfterContentChecked`, this.color);
   }
 
 }
