@@ -1,12 +1,12 @@
 import { Component, Input, ChangeDetectionStrategy, OnChanges, SimpleChange, ChangeDetectorRef } from '@angular/core';
 
 @Component({
-  selector: 'app-change-detection',
-  templateUrl: './change-detection.component.html',
-  styleUrls: ['./change-detection.component.scss'],
+  selector: 'app-detect-changes',
+  templateUrl: './detect-changes.component.html',
+  styleUrls: ['./detect-changes.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ChangeDetectionComponent implements OnChanges {
+export class DetectChangesComponent implements OnChanges {
 
   private counter = 0;
 
