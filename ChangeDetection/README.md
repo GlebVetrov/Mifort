@@ -1,6 +1,7 @@
 # ChangeDetection
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.1.0.
+This project create three timers with different ChangeDetection and the field that takes the input number and 
+increase timers on this number . First with default, second OnPuch and third OnPuch detectChanges.
 
 ## Development server
 
