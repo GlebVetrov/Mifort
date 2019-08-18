@@ -1,0 +1,46 @@
+.elemets{
+  border: 1px solid #2a3140;
+}
+
+::ng-deep .customSelect {
+  display: flex;
+
+  mat-icon {
+    margin-right: 20px;
+    color: rgba(0, 0, 0, 0.3);
+  }
+
+  .mat-select-value {
+    width: 100px;
+  }
+}
+
+.customInput {
+  display: flex;
+  align-items: center;
+
+  input {
+    border: none;
+    width: 100%;
+    padding: 5px;
+  }
+
+  mat-icon {
+    margin-right: 20px;
+    color: rgba(0, 0, 0, 0.3);
+  }
+}
+
+.options {
+  mat-icon {
+    position: absolute;
+    bottom: -3px;
+    font-size: 24px;
+  }
+
+  span{
+    margin-left: 28px;
+  }
+}
+
+.material-icons.md-24 { font-size: 24px; }

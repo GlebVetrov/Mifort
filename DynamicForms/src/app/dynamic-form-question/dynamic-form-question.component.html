@@ -1,0 +1,26 @@
+<div class="elemets" [formGroup]="form">
+  <div [ngSwitch]="question.controlType">
+
+    <div *ngSwitchCase="'textbox'" [id]="question.key" class="customInput">
+      <mat-icon matPrefix class="md-24">{{question.icon}}</mat-icon>
+      <input [formControlName]="question.key" [style.background-color]="question.color"
+            [placeholder]="question.placeholder" [id]="question.key" [type]="question.type">
+    </div>
+
+    <div [id]="question.key" *ngSwitchCase="'dropdown'" class="customSelect">
+      <mat-icon matPrefix class="md-24">{{question.icon}}</mat-icon>
+      <mat-select [(value)]="options" [formControlName]="question.key">
+        <mat-select-trigger *ngIf="options" class="options">
+          <mat-icon class="md-24" [ngStyle]="{'color': options.color}">brightness_1</mat-icon>
+          <span>{{options.name}}</span>
+        </mat-select-trigger>
+        <mat-option *ngFor="let options of question.options" [value]="options">
+          <mat-icon class="md-24" [ngStyle]="{'color': options.color}">brightness_1</mat-icon>
+          <span>{{options.name}}</span>
+        </mat-option>
+      </mat-select>
+    </div>
+
+  </div>
+
+</div>

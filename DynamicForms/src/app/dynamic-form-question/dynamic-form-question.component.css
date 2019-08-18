@@ -1,0 +1,43 @@
+.elemets {
+  border: 1px solid #2a3140;
+}
+
+::ng-deep .customSelect {
+  display: flex;
+}
+::ng-deep .customSelect mat-icon {
+  margin-right: 20px;
+  color: rgba(0, 0, 0, 0.3);
+}
+::ng-deep .customSelect .mat-select-value {
+  width: 100px;
+}
+
+.customInput {
+  display: flex;
+  align-items: center;
+}
+.customInput input {
+  border: none;
+  width: 100%;
+  padding: 5px;
+}
+.customInput mat-icon {
+  margin-right: 20px;
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.options mat-icon {
+  position: absolute;
+  bottom: -3px;
+  font-size: 24px;
+}
+.options span {
+  margin-left: 28px;
+}
+
+.material-icons.md-24 {
+  font-size: 24px;
+}
+
+/*# sourceMappingURL=dynamic-form-question.component.css.map */
