@@ -17,11 +17,13 @@ export class QuestionService {
       new DropdownQuestion({
         key: 'brave',
         options: [
-          {color: 'red',  name: 'Mifort'},
-          {color: 'green',  name: 'Great'},
-          {color: 'yellow',   name: 'Good'},
+          {color: 'red', name: 'Mifort'},
+          {color: 'green', name: 'Great'},
+          {color: 'yellow', name: 'Good'},
           {color: 'orange', name: 'Unproven'}
         ],
+        placeholder: 'Mifort Angular',
+        color: 'purple',
         order: 6,
         icon: 'calendar_today'
       }),

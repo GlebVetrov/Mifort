@@ -7,6 +7,7 @@ export class QuestionBase<T> {
   placeholder: string;
   icon: string;
   color: string;
+  options: {color: string,  name: string,  selected: boolean}[];
 
   constructor(options: {
     value?: T,
@@ -17,6 +18,7 @@ export class QuestionBase<T> {
     placeholder?: string,
     icon?: string,
     color?: string
+    options?: {color: string,  name: string,  selected: boolean}[];
   } = {}) {
     this.value = options.value;
     this.key = options.key || '';

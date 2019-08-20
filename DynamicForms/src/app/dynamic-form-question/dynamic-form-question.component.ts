@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import {FormControl, FormGroup} from '@angular/forms';
 
 import { QuestionBase } from '../question-base';
 
@@ -9,8 +9,10 @@ import { QuestionBase } from '../question-base';
   styleUrls: ['./dynamic-form-question.component.scss'],
 })
 export class DynamicFormQuestionComponent {
-  options = null;
+  options = {};
+
   @Input() question: QuestionBase<any>;
   @Input() form: FormGroup;
+
   get isValid() { return this.form.controls[this.question.key].valid; }
 }
